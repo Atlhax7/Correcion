@@ -4,6 +4,7 @@ include './Service/moduloService.php';
 
 $accion="Agregar";
 $nombre="";
+$nombreRol="";
 $nombreModulo="";
 $descripcion="";
 $url="";
@@ -16,15 +17,15 @@ $hidden="hidden";
 if(isset($_GET["rol"]))
 {
     $codRol=$_GET["rol"];
-    $aux = findRol($_GET["rol"]);
+    $aux = findRolByCod($codRol);
     $rowAux=$aux->fetch_assoc();
-    $nombreModulo=$rowAux["NOMBRE"];
+    $nombreRol=$rowAux["NOMBRE"];
 }
 
-if (isset($_POST["nombre"])&&isset($_POST["codigo"])&&isset($_POST["codModulo"])&&isset($_POST["url"])&&isset($_POST["descripcion"])&&$_POST["accion"]=="Agregar")
+if (isset($_POST["codRol"])&&isset($_POST["modulo"])&&$_POST["accion"]=="Agregar")
 {
-    echo 'Codigo de la nueva funcionalidad '.$_POST["codigo"];
-    insertFuncionalidad($_POST["nombre"],$_POST["codigo"],$_POST["descripcion"],$_POST["url"],$_POST["codModulo"]);
+    echo 'Codigo de la nueva funcionalidad '.$_POST["codRol"]." ".$_POST["modulo"];
+    insertRolModulo($_POST["modulo"],$_POST["codRol"]);
     
     
 }
@@ -49,9 +50,10 @@ if(isset($_GET["update"]))
         $hidden="";
     }
 }
-if(isset($_GET["delete"]))
+if(isset($_GET["codModulo"])&&isset($_GET["codRol"]))
 {
-    deleteFuncionalidad($_GET["delete"]);
+    echo 'Eliminando '.$_GET["codModulo"].' y '.$_GET["codRol"];
+    deleteRolModulo($_GET["codModulo"],$_GET["codRol"]);
 }
 
 ?>
@@ -132,7 +134,14 @@ if(isset($_GET["delete"]))
                             ?>
                             <tr>
                                 <td><?php echo $rowRolModulo['NOMBRE']; ?></td>
-                                <td><a href="funcionalidad.php?delete= <?php echo $rowRolModulo["COD_FUNCIONALIDAD"];?>"><img class="img-small" src="assets/img/delete.png" style="width:25px;height:25px;" alt="" /></a></td>
+                                <td>
+                                <form name="forma" method="get" class="form" action="/Correcion/rolmodulo.php">
+                                <input type="image" src="assets/img/delete.png" alt="Submit" width="25" height="25">
+                                <input type="hidden" id="codModulo" name="codModulo" value="<?php echo $rowRolModulo['COD_MODULO']; ?>" required>
+                                <input type="hidden" id="codRol" name="codRol" value="<?php echo $codRol; ?>" required>
+                                
+                                </form>
+                                </td>
                             </tr>
                             <?php 
                             
@@ -155,30 +164,11 @@ if(isset($_GET["delete"]))
                         <div class="featured-text text-center text-lg-left">
                             <h4>Registro de Rol por Modulo</h4>
                             <?php
-                            if ($nombreModulo!="" ){
-                                echo 'Nombre del modulo '.$nombreModulo;
-        
-                                
-                                
-                                    $resultALL = findAllFuncionalidad();
-                                    if ($resultALL->num_rows > 0) {
-                                        
-                                        if($accion!="")
-                                        {
-                                            while($rowAll=$resultALL->fetch_assoc())
-                                            {
-                                                $codigo=$rowAll["COD_FUNCIONALIDAD"]+1;
-                                            }
-                                            
-                                            
-                                        }
-                                        }
-                                       
-                                
-                            
-                            
+                            if ($nombreRol!="" ){
+                                echo 'Nombre del rol '.$nombreRol.' Y su codigo '.$codRol;
                             ?>
-                            <form name="forma" method="post" class="form" action="/Correcion/funcionalidad.php">
+                            <form name="forma" method="post" class="form" action="/Correcion/rolmodulo.php">
+                            <input type="hidden" id="codRol" name="codRol" value="<?php echo $codRol; ?>" required><br>
                             <select id="modulo" name="modulo">
                             <?php
                         $result = findModulo();

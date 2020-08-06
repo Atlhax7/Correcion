@@ -169,7 +169,7 @@ if(isset($_GET["delete"]))
                                     $resultALL = findAllFuncionalidad();
                                     if ($resultALL->num_rows > 0) {
                                         
-                                        if($accion!="")
+                                        if($accion!="Modificar")
                                         {
                                             while($rowAll=$resultALL->fetch_assoc())
                                             {
@@ -185,7 +185,6 @@ if(isset($_GET["delete"]))
                             
                             ?>
                             <form name="forma" method="post" class="form" action="/Correcion/funcionalidad.php">
-                                <input type="hidden" name="codVideojuego" value="<?php echo $codVideojuego ?>">
                                 <label for="modulo"><?php echo $nombreModulo; ?></label><br>
                                 <input type="hidden" id="codModulo" name="codModulo" value="<?php echo $codModulo; ?>" required><br>
                                 <label for="nombre">Nombre:</label><br>
@@ -196,8 +195,8 @@ if(isset($_GET["delete"]))
                                 <input type="text" id="descripcion" name="descripcion" value="<?php echo $descripcion; ?>" required><br>
                                 <?php ?>
                                 <input type="hidden" id="codigo" name="codigo" value="<?php echo $codigo; ?>" required pattern="[0-9.0]+"><br><br>
-                                <input type="submit" name="accion" value="<?php echo $accion ?>">
-                                <input type="button" name="cancelar" value="Cancelar" visibility="<?php echo $hidden?>" onclick="document.location='modulo.php'">
+                                <input type="submit" name="accion" value="<?php echo $accion ;?>">
+                                
                             </form> 
                             <?php
                             }

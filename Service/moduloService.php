@@ -30,7 +30,7 @@ function insertRolModulo($cmodulo, $crol)
 {
     $conection = getConection();
     $stmt = $conection->prepare("INSERT INTO ROL_MODULO (COD_ROL, COD_MODULO) VALUES (?, ?)");
-    $stmt->bind_param("ss", $cmodulo, $crol);
+    $stmt->bind_param("ss", $crol, $cmodulo);
     $stmt->execute();
     $stmt->close();
 }
@@ -51,6 +51,11 @@ function findRol()
 {
     $conection = getConection();
     return $conection->query("SELECT * FROM SEG_ROL ");;
+}
+function findRolByCod($codigo)
+{
+    $conection = getConection();
+    return $conection->query("SELECT * FROM SEG_ROL WHERE COD_ROL='".$codigo."'");;
 }
 function findRolModuloFilter($codigo)
 {
@@ -169,10 +174,10 @@ function remove($codVideojuego)
     $conection->query($sql);
     $conection->close();
 }
-function removeRolModulo($codModulo,$codRol)
+function deleteRolModulo($codModulo,$codRol)
 {
     $conection = getConection();
-    $sql = "DELETE FROM ROL_MODULO WHERE COD_ROL=".$codRol."AND COD_MODULO=".codModulo;
+    $sql = "DELETE FROM ROL_MODULO WHERE COD_ROL='".$codRol."' AND COD_MODULO=".$codModulo;
     $conection->query($sql);
     $conection->close();
 }
