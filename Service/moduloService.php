@@ -9,6 +9,14 @@ function insert($nombre, $genero, $plataforma, $precio)
     $stmt->execute();
     $stmt->close();
 }
+function insertFuncionalidad($nombre, $codigo, $descripcion, $url,$codModulo)
+{
+    $conection = getConection();
+    $stmt = $conection->prepare("INSERT INTO SEG_FUNCIONALIDAD (COD_FUNCIONALIDAD, COD_MODULO, URL_PRINCIPAL,NOMBRE,DESCRIPCION) VALUES (?, ?, ?,?,?)");
+    $stmt->bind_param("dssss", $codigo, $codModulo, $url, $nombre,$descripcion);
+    $stmt->execute();
+    $stmt->close();
+}
 function insertModulo($nombre, $codigo)
 {
     $estado='ACT';
@@ -26,14 +34,7 @@ function insertRolModulo($cmodulo, $crol)
     $stmt->execute();
     $stmt->close();
 }
-function insertFuncionalidad($modulo, $nombre, $url, $descripcion)
-{
-    $conection = getConection();
-    $stmt = $conection->prepare("INSERT INTO seg_funcionalidad (nombre, genero, plataforma,precio) VALUES (?, ?, ?,?)");
-    $stmt->bind_param("ssss", $modulo, $url, $nombre, $descripcion);
-    $stmt->execute();
-    $stmt->close();
-}
+
 
 
 function findAll()
@@ -52,6 +53,23 @@ function findModuloByCod($codigo)
     $conection = getConection();
     return $conection->query("SELECT * FROM SEG_MODULO WHERE COD_MODULO=".$codigo);
 }
+
+function findFuncionalidad($codigo)
+{
+    $conection = getConection();
+    return $conection->query("SELECT * FROM SEG_FUNCIONALIDAD WHERE COD_MODULO=".$codigo);
+}
+function findFuncionalidadByCod($codigo)
+{
+    $conection = getConection();
+    return $conection->query("SELECT * FROM SEG_FUNCIONALIDAD WHERE COD_FUNCIONALIDAD=".$codigo);
+}
+function findAllFuncionalidad()
+{
+    $conection = getConection();
+    return $conection->query("SELECT * FROM SEG_FUNCIONALIDAD");
+}
+
 
 function findSegRol()
 {
@@ -87,6 +105,14 @@ function modify($nombre, $genero, $plataforma,$precio,$codVideojuego)
     $stmt->execute();
     $stmt->close();
 }
+function modifyFuncionalidad($nombre, $codigo, $descripcion, $url,$codModulo)
+{
+    $conection = getConection();
+    $stmt = $conection->prepare("update SEG_FUNCIONALIDAD set NOMBRE=?,  URL_PRINCIPAL=?,  DESCRIPCION=?, COD_MODULO=? WHERE COD_FUNCIONALIDAD=?");
+    $stmt->bind_param("ssssd", $nombre, $url, $descripcion,$codModulo,$codigo);
+    $stmt->execute();
+    $stmt->close();
+}
 
 function modifyModulo($nombre, $codigo)
 {
@@ -114,14 +140,7 @@ function modifyRolModulo($codRol, $codModulo)
     $stmt->close();
 }
 
-function modifyFuncionalidad($codmodulo, $url, $nombre,$descripcion,$codFuncionalidad)
-{
-    $conection = getConection();
-    $stmt = $conection->prepare("update  set COD_MODULO=?,  URL_PRINCIPAL=?,  NOMBRE=?, DESCRIPCION=? where COD_FUNCIONALIDAD=?");
-    $stmt->bind_param("ss", $codmodulo, $url, $nombre,$descripcion,$codFuncionalidad);
-    $stmt->execute();
-    $stmt->close();
-}
+
 function remove($codVideojuego)
 {
     $conection = getConection();
@@ -136,10 +155,10 @@ function removeRolModulo($codModulo,$codRol)
     $conection->query($sql);
     $conection->close();
 }
-function removeFuncionalidad($codFuncionalidad)
+function deleteFuncionalidad($codFuncionalidad)
 {
     $conection = getConection();
-    $sql = "DELETE FROM seg_funcionalidad WHERE COD_FUNCIONALIDAD=".$codFuncionalidad;
+    $sql = "DELETE FROM SEG_FUNCIONALIDAD WHERE COD_FUNCIONALIDAD=".$codFuncionalidad;
     $conection->query($sql);
     $conection->close();
 }

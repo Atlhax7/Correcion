@@ -120,7 +120,7 @@ if(isset($_GET["delete"]))
                         <div class="featured-text text-center text-lg-left">
                             <h4>Registro de modulos</h4>
                             
-                            <form name="forma" method="post" class="form" action="/CORRECCION/modulo.php">
+                            <form name="forma" method="post" class="form" action="/Correcion/modulo.php">
                                 <input type="hidden" name="codVideojuego" value="<?php echo $codVideojuego ?>">
                                 <label for="nombre">Nombre:</label><br>
                                 <input type="text" id="nombre" name="nombre" value="<?php echo $nombre; ?>" required><br>
