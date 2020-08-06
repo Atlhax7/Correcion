@@ -60,7 +60,7 @@ function findRolByCod($codigo)
 function findRolModuloFilter($codigo)
 {
     $conection = getConection();
-    return $conection->query("SELECT * FROM ROL_MODULO rm, SEG_ROL sr, SEG_MODULO sm WHERE rm.COD_ROL=sr.COD_ROL AND rm.COD_MODULO =sm.COD_MODULO AND sr.COD_ROL='".$codigo."'");;
+    return $conection->query("SELECT * FROM ROL_MODULO rm, SEG_ROL sr, SEG_MODULO sm WHERE sm.ESTADO='ACT' AND rm.COD_ROL=sr.COD_ROL AND rm.COD_MODULO =sm.COD_MODULO AND sr.COD_ROL='".$codigo."'");;
 }
 function findRolModulo()
 {
