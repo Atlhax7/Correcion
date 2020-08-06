@@ -86,8 +86,9 @@ if(isset($_GET["codModulo"])&&isset($_GET["codRol"]))
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lista">Lista de videojuegos</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lista">Lista de modulos por rol</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#insertar"><?php echo $accion ?></a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php">Volver al Inicio</a></li>
                     </ul>
                 </div>
             </div>
