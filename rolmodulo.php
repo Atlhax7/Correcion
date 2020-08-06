@@ -106,7 +106,7 @@ if(isset($_GET["codModulo"])&&isset($_GET["codRol"]))
                         <?php
                         $result = findRol();
                         while($row = $result->fetch_assoc()) {?>
-                        <option value=<?php echo $row['COD_ROL'];?>><?php echo $row['NOMBRE'];?></option>
+                        <option value=<?php echo $row['COD_ROL'];?> <?php if($nombreRol==$row['NOMBRE'] ){echo 'selected';}   ?>  ><?php echo $row['NOMBRE'];?></option>
                         <?php 
                         }
                         ?>
@@ -166,7 +166,7 @@ if(isset($_GET["codModulo"])&&isset($_GET["codRol"]))
                             <h4>Registro de Rol por Modulo</h4>
                             <?php
                             if ($nombreRol!="" ){
-                                echo 'Nombre del rol '.$nombreRol.' Y su codigo '.$codRol;
+                                echo 'Rol: '.$nombreRol;
                             ?>
                             <form name="forma" method="post" class="form" action="/Correcion/rolmodulo.php">
                             <input type="hidden" id="codRol" name="codRol" value="<?php echo $codRol; ?>" required><br>
@@ -174,7 +174,7 @@ if(isset($_GET["codModulo"])&&isset($_GET["codRol"]))
                             <?php
                         $result = findModulo();
                         while($row = $result->fetch_assoc()) {?>
-                        <option value=<?php echo $row['COD_MODULO'];?>><?php echo $row['NOMBRE'];?></option>
+                        <option value=<?php echo $row['COD_MODULO'];?>  ><?php echo $row['NOMBRE'];?></option>
                         <?php 
                         }
                         ?>

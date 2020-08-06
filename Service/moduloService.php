@@ -1,14 +1,7 @@
 <?php
 include './Service/conection.php';
 
-function insert($nombre, $genero, $plataforma, $precio)
-{
-    $conection = getConection();
-    $stmt = $conection->prepare("INSERT INTO videojuego (nombre, genero, plataforma,precio) VALUES (?, ?, ?,?)");
-    $stmt->bind_param("sssd", $nombre, $genero, $plataforma, $precio);
-    $stmt->execute();
-    $stmt->close();
-}
+
 function insertFuncionalidad($nombre, $codigo, $descripcion, $url,$codModulo)
 {
     $conection = getConection();
@@ -37,11 +30,7 @@ function insertRolModulo($cmodulo, $crol)
 
 
 
-function findAll()
-{
-    $conection = getConection();
-    return $conection->query("SELECT * FROM VIDEOJUEGO");;
-}
+
 function findModulo()
 {
     $conection = getConection();
@@ -65,7 +54,7 @@ function findRolModuloFilter($codigo)
 function findRolModulo()
 {
     $conection = getConection();
-    return $conection->query("SELECT * FROM ROL_MODULO rm, SEG_ROL sr, SEG_MODULO sm WHERE rm.COD_ROL=sr.COD_ROL AND rm.COD_MODULO =sm.COD_MODULO");;
+    return $conection->query("SELECT * FROM ROL_MODULO rm, SEG_ROL sr, SEG_MODULO sm WHERE sm.ESTADO='ACT' AND rm.COD_ROL=sr.COD_ROL AND rm.COD_MODULO =sm.COD_MODULO");;
 }
 
 function findAllModulo()
@@ -97,40 +86,11 @@ function findAllFuncionalidad()
 }
 
 
-function findSegRol()
-{
-    $conection = getConection();
-    return $conection->query("SELECT * FROM seg_rol");;
-}
-function findSegModuloPorRol($codRol)
-{
-    $conection = getConection();
-    return $conection->query("SELECT * FROM seg_modulo,rol_modulo WHERE SEG_MODULO.ESTADO=ACT AND seg_modulo.COD_MODULO=rol_modulo.COD_MODULO AND rol_modulo.COD_MODULO=".$codRol);;
-}
-function findSegModulo()
-{
-    $conection = getConection();
-    return $conection->query("SELECT * FROM seg_modulo");;
-}
-function findAllFuncionalidades()
-{
-    $conection = getConection();
-    return $conection->query("SELECT * FROM seg_funcionalidad");;
-}
-function findAllRolModulo()
-{
-    $conection = getConection();
-    return $conection->query("SELECT * FROM rol_modulo");;
-}
 
-function modify($nombre, $genero, $plataforma,$precio,$codVideojuego)
-{
-    $conection = getConection();
-    $stmt = $conection->prepare("update videojuego set nombre=?,  genero=?,  plataforma=?, precio=? where cod_videojuego=?");
-    $stmt->bind_param("ss", $nombre, $genero, $plataforma,$precio,$codVideojuego);
-    $stmt->execute();
-    $stmt->close();
-}
+
+
+
+
 function modifyFuncionalidad($nombre, $codigo, $descripcion, $url,$codModulo)
 {
     $conection = getConection();
@@ -167,13 +127,7 @@ function modifyRolModulo($codRol, $codModulo)
 }
 
 
-function remove($codVideojuego)
-{
-    $conection = getConection();
-    $sql = "DELETE FROM videojuego WHERE cod_videojuego=".$codVideojuego;
-    $conection->query($sql);
-    $conection->close();
-}
+
 function deleteRolModulo($codModulo,$codRol)
 {
     $conection = getConection();

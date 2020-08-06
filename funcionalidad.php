@@ -104,7 +104,7 @@ if(isset($_GET["delete"]))
                         <?php
                         $result = findModulo();
                         while($row = $result->fetch_assoc()) {?>
-                        <option value=<?php echo $row['COD_MODULO'];?>><?php echo $row['NOMBRE'];?></option>
+                        <option value=<?php echo $row['COD_MODULO'];?> <?php if($nombreModulo==$row['NOMBRE'] ){echo 'selected';}   ?> ><?php echo $row['NOMBRE'];?></option>
                         <?php 
                         }
                         ?>
