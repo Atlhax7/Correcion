@@ -77,3 +77,5 @@ insert into SEG_ROL VALUES('DOCE','DOCENTE');
 insert into SEG_ROL VALUES('ALUM','ALUMNO');
 
 select * from seg_rol, rol_modulo, seg_modulo,seg_funcionalidad;
+
+SELECT * FROM ROL_MODULO rm, SEG_ROL sr, SEG_MODULO sm WHERE rm.COD_ROL=sr.COD_ROL AND rm.COD_MODULO =sm.COD_MODULO

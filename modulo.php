@@ -24,12 +24,13 @@ else if (isset($_POST["nombre"])&&isset($_POST["codigo"])&&$_POST["accion"]=="Mo
 }
 if(isset($_GET["update"]))
 {
+    $accion="Modificar";
     $result = findModuloByCod($_GET["update"]);
     if ($result->num_rows > 0) {
         $row1=$result->fetch_assoc();
         $nombre=$row1["NOMBRE"];
         $codigo=$row1["COD_MODULO"];
-        $accion="Modificar";
+        
         $hidden="";
     }
 }
@@ -69,7 +70,7 @@ if(isset($_GET["delete"]))
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lista">Lista de videojuegos</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#insertar"><?php echo $accion ?></a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#insertar"><?php echo $accion; ?></a></li>
                     </ul>
                 </div>
             </div>
@@ -103,7 +104,8 @@ if(isset($_GET["delete"]))
                                 <td><a href="modulo.php?delete= <?php echo $row["COD_MODULO"];?>"><img class="img-small" src="assets/img/delete.png" style="width:25px;height:25px;" alt="" /></a></td>
                             </tr>
                             <?php }
-                            }?>
+                            }
+                            ?>
                         </table>
                     </div>
                 </div>
@@ -118,21 +120,29 @@ if(isset($_GET["delete"]))
                     <div class="col-xl-8 col-lg-7"><img class="img-fluid mb-3 mb-lg-0" src="assets/img/videogame.png" style="width:512px;height:512px;" alt="" /></div>
                     <div class="col-xl-4 col-lg-5">
                         <div class="featured-text text-center text-lg-left">
-                            <h4>Registro de modulos</h4>
+                            <h4><?php echo $accion; ?> modulos</h4>
                             
                             <form name="forma" method="post" class="form" action="/Correcion/modulo.php">
                                 <input type="hidden" name="codVideojuego" value="<?php echo $codVideojuego ?>">
                                 <label for="nombre">Nombre:</label><br>
                                 <input type="text" id="nombre" name="nombre" value="<?php echo $nombre; ?>" required><br>
-                                <?php if ($codigo!="")
+                                <?php 
+                                if ($accion=="Agregar")
                                 {
-                                    $codigo=$row['COD_MODULO'] + 1;   
-                                }?>
+                                    $resultAll = findAllModulo();
+                                    if ($resultAll->num_rows > 0) {
+                            // output data of each row
+                            while($rowAll = $resultAll->fetch_assoc()) {
+                                    $codigo=$rowAll['COD_MODULO'] + 1; 
+                            }
+                                }
+                            } 
+                                ?>
                                 <input type="hidden" id="codigo" name="codigo" value="<?php echo $codigo; ?>" required pattern="[0-9.0]+"><br><br>
                                 <input type="submit" name="accion" value="<?php echo $accion ?>">
-                                <input type="button" name="cancelar" value="Cancelar" visibility="<?php echo $hidden?>" onclick="document.location='modulo.php'">
+                                <input type="button" name="cancelar" value="Cancelar" visibility="<?php echo $hidden;?>" onclick="document.location='modulo.php'">
                             </form> 
-
+                                
                         </div>
                     </div>
                 </div>
